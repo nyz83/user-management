@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -26,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('users.create', ['genders' => User::GENDER]);
     }
 
     /**
@@ -57,7 +55,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', ['user' => $user]);
+        return view('users.edit', ['user' => $user, 'genders' => User::GENDER]);
     }
 
     /**

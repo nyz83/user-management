@@ -39,19 +39,11 @@
                             <div class="space-y-3">
                                 @foreach ($features as $feature)
                                     <div class="flex gap-x-4 gap-y-2">
-                                        <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-sm font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                                            {{ $feature->name }}
-                                        </span>
+                                        <x-badge :value="$feature->name" :type="__('gray')" />
                                         @foreach ($role->permissions as $permission)
                                             @if ($permission->feature_id == $feature->id)
                                                 <div class="flex flex-wrap justify-center gap-y-4">
-                                                    <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-sm font-medium text-gray-900 ring-1 ring-inset ring-gray-200">
-                                                        <svg class="h-1.5 w-1.5 fill-green-500" aria-hidden="true"
-                                                            viewBox="0 0 6 6">
-                                                            <circle cx="3" cy="3" r="3"></circle>
-                                                        </svg>
-                                                        {{ $permission->name }}
-                                                    </span>
+                                                    <x-badge :value="$permission->name" :type="__('green')" />
                                                 </div>
                                             @endif
                                         @endforeach
@@ -62,10 +54,10 @@
                         </td>
                         <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                             <div class="flex justify-center gap-2">
-                                <a class="text-indigo-600 hover:text-indigo-900"
+                                <x-nav-link class="text-indigo-600 hover:text-indigo-900"
                                     href="{{ route('roles.edit', $role) }}">
                                     Edit<span class="sr-only">, {{ $role->name }}</span>
-                                </a>
+                                </x-nav-link>
                                 <form class="text-indigo-600 hover:text-indigo-900"
                                     action="{{ route('roles.destroy', $role) }}" method="POST">
                                     @csrf

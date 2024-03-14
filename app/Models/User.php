@@ -49,4 +49,6 @@ class User extends Authenticatable
         'password' => 'hashed',
         'is_active' => 'boolean',
     ];
+
+    public const GENDER = ['male' => 'male', 'female' => 'female'];
 }

@@ -4,64 +4,53 @@
         <div class="mb-4 grid gap-4 sm:grid-cols-3">
             <div>
                 <x-input-label class="mb-2" for="name" :value="__('Name')" />
-                <x-text-input id="name" name="name" value="{{ old('name') }}" required />
+                <x-input-text id="name" name="name" value="{{ old('name') }}" required />
                 @error('name')
-                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    <x-input-error class="mt-1" :messages="$message" />
                 @enderror
             </div>
             <div>
                 <x-input-label class="mb-2" for="username" :value="__('Username')" />
-                <x-text-input id="username" name="username" value="{{ old('username') }}" required />
+                <x-input-text id="username" name="username" value="{{ old('username') }}" required />
                 @error('username')
-                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    <x-input-error class="mt-1" :messages="$message" />
                 @enderror
             </div>
             <div>
                 <x-input-label class="mb-2" for="email" :value="__('Email')" />
-                <x-text-input id="email" name="email" type="email" value="{{ old('email') }}" required />
+                <x-input-text id="email" name="email" type="email" value="{{ old('email') }}" required />
                 @error('email')
-                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    <x-input-error class="mt-1" :messages="$message" />
                 @enderror
             </div>
             <div>
                 <x-input-label class="mb-2" for="password" :value="__('Password')" />
-                <x-text-input id="password" name="password" value="{{ old('password') }}" required />
+                <x-input-text id="password" name="password" value="{{ old('password') }}" required />
                 @error('password')
-                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    <x-input-error class="mt-1" :messages="$message" />
                 @enderror
             </div>
             <div>
                 <x-input-label class="mb-2" for="phone" :value="__('Phone')" />
-                <x-text-input id="phone" name="phone" value="{{ old('phone') }}" required />
+                <x-input-text id="phone" name="phone" value="{{ old('phone') }}" required />
                 @error('phone')
-                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    <x-input-error class="mt-1" :messages="$message" />
                 @enderror
             </div>
             <div>
                 <x-input-label class="mb-2" for="gender" :value="__('Gender')" />
-                <x-select id="gender" name="gender">
-                    <option selected>Select gender</option>
-                    <option value="male">
-                        Male
-                    </option>
-                    <option value="female">
-                        Female
-                    </option>
-                    <option value="unknown">
-                        Unknown
-                    </option>
-                </x-select>
+                <x-input-select id="gender" name="gender" :options="$genders" :default="__('Select Gender')" />
                 @error('gender')
-                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    <x-input-error class="mt-1" :messages="$message" />
                 @enderror
             </div>
             <div>
                 <x-input-label class="mb-2" for="address" :value="__('Address')" />
-                <x-textarea id="address" name="address" rows="4" plceholder="Write Your Address" required>
+                <x-input-textarea id="address" name="address" rows="4" plceholder="Write Your Address" required>
                     {{ old('address') }}
-                </x-textarea>
+                </x-input-textarea>
                 @error('address')
-                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    <x-input-error class="mt-1" :messages="$message" />
                 @enderror
             </div>
             <div>
@@ -71,8 +60,8 @@
                     </legend>
                     <div class="relative flex gap-x-3">
                         <div class="flex h-6 items-center">
-                            <x-text-input name="is_active" type="hidden" value="0" />
-                            <x-text-input class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            <x-input-text name="is_active" type="hidden" value="0" />
+                            <x-input-text class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 id="is_active" name="is_active" type="checkbox" value="1" />
                         </div>
                         <div class="text-sm leading-6">
@@ -86,12 +75,12 @@
                     </div>
                 </fieldset>
                 @error('is_active')
-                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    <x-input-error class="mt-1" :messages="$message" />
                 @enderror
             </div>
         </div>
-        <x-primary-button>
+        <x-button-primary>
             Create User
-        </x-primary-button>
+        </x-button-primary>
     </form>
 </x-app-layout>

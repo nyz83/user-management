@@ -32,7 +32,7 @@ class UpdateUserRequest extends FormRequest
             'password' => 'nullable|string',
             'phone' =>'required|string',
             'address' => 'nullable|string',
-            'gender' => ['required', Rule::in(['male', 'female', 'unknown'])],
+            'gender' => ['required', Rule::in(['male', 'female'])],
             'is_active' =>'required|boolean'
         ];
     }

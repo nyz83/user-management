@@ -51,12 +51,12 @@
                             </button>
                         </div>
                         <!--Sidebar for mobile -->
-                        @include('layouts.mobile-aside')
+                        @include('layouts.aside.mobile')
                     </div>
                 </div>
             </div>
             <!-- Sidebar for desktop -->
-            @include('layouts.desktop-aside')
+            @include('layouts.aside.desktop')
 
             <div class="lg:pl-72">
                 <!-- Navigation -->

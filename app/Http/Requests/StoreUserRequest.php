@@ -29,9 +29,8 @@ class StoreUserRequest extends FormRequest
             'password' => 'required|string',
             'phone' => 'required|string',
             'address' => 'nullable|string',
-            'gender' => ['required', Rule::in(['male', 'female', 'unknown'])],
+            'gender' => ['required', Rule::in(['male', 'female'])],
             'is_active' => 'required|boolean'
         ];
     }
 }
-
