@@ -54,10 +54,10 @@
                         </td>
                         <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                             <div class="flex justify-center gap-2">
-                                <x-nav-link class="text-indigo-600 hover:text-indigo-900"
+                                <a class="text-indigo-600 hover:text-indigo-900"
                                     href="{{ route('roles.edit', $role) }}">
                                     Edit<span class="sr-only">, {{ $role->name }}</span>
-                                </x-nav-link>
+                                </a>
                                 <form class="text-indigo-600 hover:text-indigo-900"
                                     action="{{ route('roles.destroy', $role) }}" method="POST">
                                     @csrf

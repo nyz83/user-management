@@ -6,12 +6,14 @@
                 A list of all the users
             </p>
         </div>
-        <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <a class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                type="button" href="{{ route('users.create') }}">
-                Add user
-            </a>
-        </div>
+        @can('create', \App\Models\User::class)
+            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+                <a class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    type="button" href="{{ route('users.create') }}">
+                    Add user
+                </a>
+            </div>
+        @endcan
     </div>
     <div class="mb-4">
         <table class="min-w-full divide-y divide-gray-300">
@@ -44,20 +46,25 @@
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             Member
                         </td>
+
                         <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                             <div class="flex justify-center gap-2">
-                                <a class="text-indigo-600 hover:text-indigo-900"
-                                    href="{{ route('users.edit', $user) }}">
-                                    Edit<span class="sr-only">, Lindsay Walton</span>
-                                </a>
-                                <form class="text-indigo-600 hover:text-indigo-900"
-                                    action="{{ route('users.destroy', $user) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button>
-                                        Delete<span class="sr-only">, Lindsay Walton</span>
-                                    </button>
-                                </form>
+                                @can('update', \App\Models\User::class)
+                                    <a class="text-indigo-600 hover:text-indigo-900"
+                                        href="{{ route('users.edit', $user) }}">
+                                        Edit<span class="sr-only">, Lindsay Walton</span>
+                                    </a>
+                                @endcan
+                                @can('delete', \App\Models\User::class)
+                                    <form class="text-indigo-600 hover:text-indigo-900"
+                                        action="{{ route('users.destroy', $user) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button>
+                                            Delete<span class="sr-only">, Lindsay Walton</span>
+                                        </button>
+                                    </form>
+                                @endcan
                             </div>
                         </td>
                     </tr>

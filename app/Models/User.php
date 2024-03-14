@@ -51,4 +51,9 @@ class User extends Authenticatable
     ];
 
     public const GENDER = ['male' => 'male', 'female' => 'female'];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 }

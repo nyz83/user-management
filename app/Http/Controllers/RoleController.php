@@ -6,6 +6,7 @@ use App\Http\Requests\RoleRequest;
 use App\Models\Feature;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -15,6 +16,8 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Role::class);
+
         $roles = Role::all();
         $features = Feature::all();
         return view('roles.index', ['roles' => $roles, 'features' => $features]);
@@ -25,6 +28,8 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Role::class);
+
         $features = Feature::all();
         return view('roles.create', ['features' => $features]);
     }
@@ -34,6 +39,8 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request)
     {
+        $this->authorize('create', Role::class);
+
         $validated = $request->validated();
 
         $role = Role::create($validated);
@@ -56,6 +63,8 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        $this->authorize('update', Role::class);
+
         $features = Feature::with('permissions')->get();
         return view('roles.edit', ['role' => $role, 'features' => $features]);
     }
@@ -65,6 +74,8 @@ class RoleController extends Controller
      */
     public function update(RoleRequest $request, Role $role)
     {
+        $this->authorize('update', Role::class);
+
         $validated = $request->validated();
 
         $role->name = $validated['name'];
@@ -80,6 +91,8 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        $this->authorize('delete', Role::class);
+
         if ($role->users()->count() > 0) {
             return redirect()->back();
         }
