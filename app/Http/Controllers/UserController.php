@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -43,6 +44,7 @@ class UserController extends Controller
         $user = new User();
         $user->fill($validated);
         $user->password = Hash::make($validated['password']);
+        $user->role_id = Role::USER;
         $user->save();
 
         return redirect()->route('users.index');
