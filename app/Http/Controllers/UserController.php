@@ -41,13 +41,16 @@ class UserController extends Controller
 
         $validated = $request->validated();
 
-        $user = new User();
-        $user->fill($validated);
-        $user->password = Hash::make($validated['password']);
-        $user->role_id = Role::USER;
-        $user->save();
-
-        return redirect()->route('users.index');
+        try {
+            $user = new User();
+            $user->fill($validated);
+            $user->password = Hash::make($validated['password']);
+            $user->role_id = Role::USER;
+            $user->save();
+            return redirect()->route('users.index')->with('success', 'User created successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 
     /**
@@ -75,7 +78,13 @@ class UserController extends Controller
     {
         $this->authorize('update', User::class);
 
-        $user->update($request->validated());
+        try {
+            $user->update($request->validated());
+            return redirect()->route('users.index')->with('success', 'User updated successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
+
 
         return  redirect()->route('users.index');
     }
@@ -87,8 +96,11 @@ class UserController extends Controller
     {
         $this->authorize('delete', User::class);
 
-        $user->delete();
-
-        return redirect()->route('users.index');
+        try {
+            $user->delete();
+            return redirect()->route('users.index')->with('success', 'User deleted successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 }

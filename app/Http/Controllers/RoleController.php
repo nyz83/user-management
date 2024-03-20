@@ -43,11 +43,14 @@ class RoleController extends Controller
 
         $validated = $request->validated();
 
-        $role = Role::create($validated);
-        $permissions = Permission::whereIn('id', $validated['permissions'])->get();
-        $role->permissions()->attach($permissions);
-
-        return redirect()->route('roles.index');
+        try {
+            $role = Role::create($validated);
+            $permissions = Permission::whereIn('id', $validated['permissions'])->get();
+            $role->permissions()->attach($permissions);
+            return redirect()->route('roles.index')->with('success', 'Role created successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 
     /**
@@ -78,12 +81,15 @@ class RoleController extends Controller
 
         $validated = $request->validated();
 
-        $role->name = $validated['name'];
-        $permissions = Permission::whereIn('id', $validated['permissions'])->get();
-        $role->permissions()->sync($permissions);
-        $role->update($validated);
-
-        return redirect()->route('roles.index');
+        try {
+            $role->name = $validated['name'];
+            $permissions = Permission::whereIn('id', $validated['permissions'])->get();
+            $role->permissions()->sync($permissions);
+            $role->update($validated);
+            return redirect()->route('roles.index')->with('success', 'Role updated successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 
     /**
@@ -94,12 +100,12 @@ class RoleController extends Controller
         $this->authorize('delete', Role::class);
 
         if ($role->users()->count() > 0) {
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Role cannot be deleted because it is used by users');
         }
 
         $role->permissions()->detach();
         $role->delete();
 
-        return redirect()->route('roles.index');
+        return redirect()->route('roles.index')->with('success', 'Role deleted successfully!');
     }
 }

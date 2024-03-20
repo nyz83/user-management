@@ -12,6 +12,9 @@
     <link href="https://fonts.bunny.net" rel="preconnect">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+    {{-- Toastify --}}
+    <link type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -71,6 +74,31 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <style>
+        .toastify {
+            background-image: unset;
+        }
+    </style>
+    @if (session()->has('error'))
+        <script>
+            Toastify({
+                text: "{{ session('error') }}",
+                className: "bg-red-400",
+                position: 'center'
+            }).showToast();
+        </script>
+    @endif
+    @if (session()->has('success'))
+        <script>
+            Toastify({
+                text: "{{ session('success') }}",
+                className: "bg-green-400",
+                position: 'center'
+            }).showToast();
+        </script>
+    @endif
 </body>
 
 </html>
