@@ -18,7 +18,10 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
 
         return view('users.index', [
-            'users' => User::select('id', 'name', 'username', 'email')->latest()->paginate(20)
+            'users' => User::with('role')
+                ->select('id', 'name', 'username', 'email', 'role_id')
+                ->latest()
+                ->paginate(20)
         ]);
     }
 
@@ -29,7 +32,9 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        return view('users.create', ['genders' => User::GENDER]);
+        $roles = Role::select('id', 'name')->get()->mapWithKeys(fn ($role) => [$role->id => $role->name]);
+
+        return view('users.create', ['genders' => User::GENDER, 'roles' => $roles]);
     }
 
     /**
@@ -45,7 +50,7 @@ class UserController extends Controller
             $user = new User();
             $user->fill($validated);
             $user->password = Hash::make($validated['password']);
-            $user->role_id = Role::USER;
+            $user->role_id = $validated['role_id'];
             $user->save();
             return redirect()->route('users.index')->with('success', 'User created successfully!');
         } catch (\Throwable $th) {
@@ -68,7 +73,9 @@ class UserController extends Controller
     {
         $this->authorize('update', User::class);
 
-        return view('users.edit', ['user' => $user, 'genders' => User::GENDER]);
+        $roles = Role::select('id', 'name')->get()->mapWithKeys(fn ($role) => [$role->id => $role->name]);
+
+        return view('users.edit', ['user' => $user, 'genders' => User::GENDER, 'roles' => $roles]);
     }
 
     /**

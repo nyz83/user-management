@@ -44,7 +44,7 @@
                             {{ $user->email }}
                         </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                            Member
+                            {{ $user->role->name }}
                         </td>
 
                         <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">

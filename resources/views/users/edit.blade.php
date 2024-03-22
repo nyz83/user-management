@@ -58,6 +58,13 @@
                 @enderror
             </div>
             <div>
+                <x-input-label class="mb-2" for="role" :value="__('Role')" />
+                <x-input-select id="role" name="role_id" :options="$roles" :default="__('Select Role')" :selected="$user->role_id" />
+                @error('gender')
+                    <x-input-error class="mt-1" :messages="$message" />
+                @enderror
+            </div>
+            <div>
                 <fieldset>
                     <legend class="mb-2 block text-sm font-medium text-gray-700" id="is_active">
                         Active Status

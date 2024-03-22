@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Role;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -30,7 +31,8 @@ class StoreUserRequest extends FormRequest
             'phone' => 'required|string',
             'address' => 'nullable|string',
             'gender' => ['required', Rule::in(['male', 'female'])],
-            'is_active' => 'required|boolean'
+            'is_active' => 'required|boolean',
+            'role_id' => ['required', Rule::in(Role::pluck('id')->toArray())]
         ];
     }
 }
